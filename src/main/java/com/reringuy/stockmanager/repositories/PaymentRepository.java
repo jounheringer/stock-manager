@@ -3,12 +3,14 @@ package com.reringuy.stockmanager.repositories;
 import com.reringuy.stockmanager.models.Payment;
 import com.reringuy.stockmanager.utils.Pagination;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
 
 public class PaymentRepository {
+    @Inject
     private EntityManager entityManager;
 
     public PaymentRepository() {

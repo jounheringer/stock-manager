@@ -2,11 +2,13 @@ package com.reringuy.stockmanager.repositories;
 
 import com.reringuy.stockmanager.models.Products;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
 public class ProductsRepository {
 
+    @Inject
     private EntityManager entityManager;
 
     public ProductsRepository() {

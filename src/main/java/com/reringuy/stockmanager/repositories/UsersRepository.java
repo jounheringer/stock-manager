@@ -2,6 +2,7 @@ package com.reringuy.stockmanager.repositories;
 
 import com.reringuy.stockmanager.models.Users;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public class UsersRepository implements Serializable {
 
+    @Inject
     private EntityManager entityManager;
 
     public UsersRepository() {
