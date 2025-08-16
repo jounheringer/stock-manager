@@ -10,3 +10,15 @@ services:
       - POSTGRES_DB=stockdb
     ports:
       - "5431:5432"
+
+  tomcat:
+    image: tomcat:8.5-jre8
+    container_name: stockmanager-tomcat
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target/stock-manager-1.0-SNAPSHOT.war:/usr/local/tomcat/webapps/ROOT.war
+    environment:
+      - CATALINA_OPTS=-Xms256m -Xmx512m
