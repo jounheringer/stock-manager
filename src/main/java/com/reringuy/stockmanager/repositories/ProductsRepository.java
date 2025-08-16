@@ -2,10 +2,12 @@ package com.reringuy.stockmanager.repositories;
 
 import com.reringuy.stockmanager.models.Products;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+@RequestScoped
 public class ProductsRepository {
 
     @Inject
@@ -24,6 +26,11 @@ public class ProductsRepository {
 
     public Products findById(long id) {
         return entityManager.find(Products.class, id);
+    }
+
+    public Products findByCodigo(String codigo) {
+        return entityManager.createQuery("SELECT p FROM Products p WHERE p.codigo = :codigo", Products.class)
+                .setParameter("codigo", codigo).getSingleResult();
     }
 
     public Products findByCodigoLike(String codigo) {

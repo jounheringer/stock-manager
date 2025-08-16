@@ -10,9 +10,6 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "valor", nullable = false)
-    private Double value;
-
     @Column(name = "quantidade", nullable = false)
     private Integer quantity;
 
@@ -25,12 +22,14 @@ public class Payment {
     private Users user;
 
 
-    public Double getValue() {
-        return value;
+    public Payment(int Quantity, Products product, Users user) {
+        this.quantity = Quantity;
+        this.product = product;
+        this.user = user;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public Payment() {
+
     }
 
     public Integer getQuantity() {
@@ -49,19 +48,18 @@ public class Payment {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return Objects.equals(id, payment.id) && Objects.equals(value, payment.value) && Objects.equals(quantity, payment.quantity) && Objects.equals(product, payment.product) && Objects.equals(user, payment.user);
+        return Objects.equals(id, payment.id) && Objects.equals(quantity, payment.quantity) && Objects.equals(product, payment.product) && Objects.equals(user, payment.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, value, quantity, product, user);
+        return Objects.hash(id, quantity, product, user);
     }
 
     @Override
     public String toString() {
         return "Payment{" +
                 "id=" + id +
-                ", value=" + value +
                 ", quantity=" + quantity +
                 ", product=" + product +
                 ", user=" + user +
