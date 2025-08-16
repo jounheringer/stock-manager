@@ -9,4 +9,4 @@ services:
       - POSTGRES_PASSWORD=stock
       - POSTGRES_DB=stockdb
     ports:
-      - "7000:5432"
+      - "5431:5432"
