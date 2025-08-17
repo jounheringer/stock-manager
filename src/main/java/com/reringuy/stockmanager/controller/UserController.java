@@ -10,12 +10,14 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.List;
 
 @Named
 @ViewScoped
 public class UserController implements Serializable {
     private static final long serialVersionUID = 1L;
     private Users users;
+    private List<Users> usersList;
 
     @Inject
     private UsersService usersService;
@@ -23,6 +25,11 @@ public class UserController implements Serializable {
     @PostConstruct
     public void init() {
         this.users = new Users();
+        this.usersList = this.usersService.GetAllUsers();
+    }
+
+    public List<Users> getUsersList() {
+        return usersList;
     }
 
     public Users getUsers() {
@@ -37,6 +44,8 @@ public class UserController implements Serializable {
         try {
             this.usersService.SaveUser(this.users);
             this.users = new Users();
+            this.usersList = this.usersService.GetAllUsers();
+
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Usuário salvo com sucesso."));
         } catch (RuntimeException ex) {

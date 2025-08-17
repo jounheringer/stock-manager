@@ -58,5 +58,30 @@
                                  styleClass="btn"/>
             </h:form>
         </div>
+
+        <h:form>
+            <p:dataTable value="#{productController.productsList}"
+                         var="item"
+                         emptyMessage="Nenhum produto cadastrado."
+                         paginator="#{not empty productController.productsList}"
+                         rows="5"
+                         paginatorPosition="bottom">
+                <p:column headerText="Codigo">
+                    <h:outputText value="#{item.code}"/>
+                </p:column>
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{item.description}"/>
+                </p:column>
+                <p:column headerText="Validade">
+                    <h:outputText value="#{item.expireDate}"/>
+                </p:column>
+                <p:column headerText="Data de Cadastro">
+                    <h:outputText value="#{item.dateDelivered}"/>
+                </p:column>
+                <p:column headerText="Quantidade">
+                    <h:outputText value="#{item.quantity}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
     </ui:define>
 </ui:composition>

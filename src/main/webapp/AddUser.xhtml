@@ -37,5 +37,21 @@
                                  styleClass="btn"/>
             </h:form>
         </div>
+
+        <h:form>
+            <p:dataTable value="#{userController.usersList}"
+                         var="item"
+                         emptyMessage="Nenhum usuário cadastrado."
+                         paginator="#{not empty userController.usersList}"
+                         rows="5"
+                         paginatorPosition="bottom">
+                <p:column headerText="Nome">
+                    <h:outputText value="#{item.username}"/>
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{item.email}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
     </ui:define>
 </ui:composition>
