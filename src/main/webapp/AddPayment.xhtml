@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xml:lang="pt-BR" lang="pt-BR"
+                template="WEB-INF/template/Layout.xhtml">
+    <ui:define name="content">
+        <div class="form-container">
+            <h2>Novo Pagamento</h2>
+            <h:form id="containerForm" styleClass="form">
+                <p:outputLabel value="Usuário:" for="user"/>
+                <p:selectOneMenu id="user"
+                                 value="#{paymentController.selectedUserId}"
+                                 required="true"
+                                 requiredMessage="Usuário é obrigatório!"
+                                 styleClass="full-width">
+                    <f:selectItem itemLabel="Selecione um usuário" itemValue="" noSelectionOption="true"/>
+                    <f:selectItems value="#{paymentController.users}" var="user"
+                                   itemValue="#{user.id}" itemLabel="#{user.username}"/>
+                    <p:ajax event="change" update="saveButton"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Produto:" for="product"/>
+                <p:selectOneMenu id="product"
+                                 value="#{paymentController.selectedProductId}"
+                                 required="true"
+                                 requiredMessage="Produto é obrigatório!"
+                                 styleClass="full-width">
+                    <f:selectItem itemLabel="Selecione um produto" itemValue="" noSelectionOption="true"/>
+                    <f:selectItems value="#{paymentController.products}" var="product"
+                                   itemValue="#{product.id}" itemLabel="#{product.code} - #{product.description}"/>
+                    <p:ajax event="change" update="saveButton"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Quantidade:" for="quantity"/>
+                <h:inputText id="quantity"
+                             value="#{paymentController.quantity}"
+                             required="true"
+                             showButtons="false"
+                             requiredMessage="Quantidade é obrigatória!"
+                             pt:type="number" pt:step="1" pt:min="1" pt:inputmode="numeric"
+                             pt:placeholder="Quantidade">
+                    <f:validateLongRange minimum="1" message="A quantidade deve ser maior que 0!"/>
+                    <f:converter converterId="javax.faces.Integer"/>
+                    <f:ajax event="keyup" render="saveButton"/>
+                </h:inputText>
+
+                <h:commandButton id="saveButton" value="Salvar"
+                                 action="#{paymentController.savePayment}"
+                                 disabled="#{empty paymentController.selectedUserId or empty paymentController.selectedProductId or paymentController.quantity le 0}"
+                                 styleClass="btn"/>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
