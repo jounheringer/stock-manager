@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xml:lang="pt-BR" lang="pt-BR"
+                template="WEB-INF/template/Layout.xhtml">
+    <ui:define name="content">
+        <div class="form-container">
+            <h2>Novo Produto</h2>
+            <h:form id="containerForm" styleClass="form">
+                <p:outputLabel value="Codigo:" for="code"/>
+                <h:inputText id="code"
+                             value="#{productController.products.code}"
+                             required="true"
+                             requiredMessage="Codigo é obrigatório!"
+                             pt:placeholder="Digite o código do produto">
+                    <f:ajax event="keyup" render="saveButton"/>
+                </h:inputText>
+
+                <p:outputLabel value="Descrição:" for="description"/>
+                <h:inputTextarea id="description"
+                                 value="#{productController.products.description}"
+                                 rows="3"
+                                 pt:placeholder="Descrição do produto (opcional)"/>
+
+                <p:outputLabel value="Data de Validade:" for="expireDate"/>
+                <p:datePicker id="expireDate"
+                              value="#{productController.products.expireDate}"
+                              mindate="#{productController.todayDate}"
+                              required="true"
+                              placeholder="Selecione a data de validade">
+                    <p:ajax event="dateSelect" update="saveButton"/>
+                    <p:ajax event="change" update="saveButton"/>
+                </p:datePicker>
+
+                <p:outputLabel value="Quantidade:" for="quantity"/>
+                <h:inputText id="quantity"
+                             value="#{productController.products.quantity}"
+                             required="true"
+                             showButtons="false"
+                             requiredMessage="A quantidade é obrigatória!"
+                             pt:type="number" pt:step="1" pt:min="1" pt:inputmode="numeric"
+                             pt:placeholder="Quantidade">
+                    <f:validateLongRange minimum="1" message="A quantidade deve ser maior que 0!"/>
+                    <f:converter converterId="javax.faces.Integer"/>
+                    <f:ajax event="keyup" render="saveButton"/>
+                </h:inputText>
+
+                <h:commandButton id="saveButton" value="Salvar"
+                                 action="#{productController.saveProduct}"
+                                 disabled="#{empty productController.products.code or
+                                        productController.products.quantity le 0}"
+                                 styleClass="btn"/>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

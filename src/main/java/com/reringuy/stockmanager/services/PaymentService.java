@@ -1,15 +1,16 @@
 package com.reringuy.stockmanager.services;
 
 import com.reringuy.stockmanager.models.Payment;
+import com.reringuy.stockmanager.models.PaymentDetails;
 import com.reringuy.stockmanager.models.Products;
 import com.reringuy.stockmanager.models.Users;
 import com.reringuy.stockmanager.repositories.PaymentRepository;
-import com.reringuy.stockmanager.utils.Pagination;
 import com.reringuy.stockmanager.utils.Transactional;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.util.List;
 
 @RequestScoped
 public class PaymentService implements Serializable {
@@ -20,10 +21,10 @@ public class PaymentService implements Serializable {
 
     @Transactional
     public void SetPayment(Users users, Products products, int quantity) throws RuntimeException {
-        if (quantity <= 0 || quantity > products.getQuantidade()) {
+        if (quantity <= 0 || quantity > products.getQuantity()) {
             throw new RuntimeException("Quantidade invalida.");
         }
-        products.setQuantidade(products.getQuantidade() - quantity);
+        products.setQuantity(products.getQuantity() - quantity);
         Payment newPayment = new Payment(quantity, products, users);
 
         productsService.UpdateProduct(products);
@@ -31,7 +32,7 @@ public class PaymentService implements Serializable {
     }
 
     @Transactional
-    public Pagination<Payment> GetPaymentsList(String param, int currentPage, int pageSize) {
-        return paymentRepository.paginate(param, currentPage, pageSize);
+    public List<PaymentDetails> GetPaymentsList(String param) {
+        return paymentRepository.paginate(param);
     }
 }

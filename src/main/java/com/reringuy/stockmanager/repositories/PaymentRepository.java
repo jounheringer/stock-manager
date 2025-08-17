@@ -1,13 +1,12 @@
 package com.reringuy.stockmanager.repositories;
 
 import com.reringuy.stockmanager.models.Payment;
-import com.reringuy.stockmanager.utils.Pagination;
+import com.reringuy.stockmanager.models.PaymentDetails;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.Collections;
 import java.util.List;
 
 @RequestScoped
@@ -46,40 +45,21 @@ public class PaymentRepository {
         }
     }
 
-    public Pagination<Payment> paginate(String param, int currentPage, int pageSize) {
-        int normalizedPageSize = pageSize <= 0 ? 10 : pageSize;
+    public List<PaymentDetails> paginate(String param) {
+        boolean hasParam = param != null && !param.trim().isEmpty();
+        String likeParam = hasParam ? "%" + param.trim().toLowerCase() + "%" : null;
 
-        Long count = entityManager
-                .createQuery(
-                        "SELECT COUNT(p) FROM Payment p "
-                                + (param != null ? "WHERE p.product.codigo LIKE :param" : ""), Long.class
-                )
-                .setParameter("param", "%" + param + "%")
-                .getSingleResult();
-        int totalItems = count == null ? 0 : count.intValue();
+        String itemsJpql = "SELECT NEW com.reringuy.stockmanager.models.PaymentDetails(p, u, prod) FROM Payment p " +
+                "LEFT JOIN p.product prod " +
+                "LEFT JOIN p.user u " +
+                (hasParam ? "WHERE LOWER(prod.code) LIKE :param " : "") +
+                "ORDER BY p.id";
 
-        int totalPages = totalItems == 0 ? 0 : (int) Math.ceil((double) totalItems / normalizedPageSize);
-
-        int normalizedPage = currentPage <= 0 ? 1 : currentPage;
-        if (totalPages > 0 && normalizedPage > totalPages) {
-            normalizedPage = totalPages;
+        TypedQuery<PaymentDetails> itemsQuery = entityManager.createQuery(itemsJpql, PaymentDetails.class);
+        if (hasParam) {
+            itemsQuery.setParameter("param", likeParam);
         }
 
-        if (totalItems == 0) {
-            return new Pagination<>(Collections.emptyList(), normalizedPageSize, 1, 0, 0);
-        }
-
-        int firstResult = (normalizedPage - 1) * normalizedPageSize;
-
-        List<Payment> items = entityManager.createQuery(
-                "SELECT p FROM Payment p"
-                        + (param != null ? "WHERE p.product.codigo LIKE :param" : "")
-                        + " ORDER BY p.id", Payment.class)
-                .setParameter("param", "%" + param + "%")
-                .setFirstResult(firstResult)
-                .setMaxResults(normalizedPageSize)
-                .getResultList();
-
-        return new Pagination<>(items, normalizedPageSize, normalizedPage, totalPages, totalItems);
+        return itemsQuery.getResultList();
     }
 }

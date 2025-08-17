@@ -5,10 +5,12 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="StockManager">
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5431/stockdb" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://postgres:5432/stockdb" />
             <property name="javax.persistence.jdbc.user" value="stock" />
             <property name="javax.persistence.jdbc.password" value="stock" />
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect" />
 
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
             <property name="javax.persistence.schema-generation.create-source" value="metadata" />

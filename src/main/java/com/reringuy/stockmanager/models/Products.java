@@ -14,29 +14,29 @@ public class Products implements Serializable {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String codigo;
+    private String code;
 
     @Column
-    private String descricao;
+    private String description;
 
     @Column(name = "data_entrada", nullable = false)
-    private LocalDate dataEntrada;
+    private LocalDate dateDelivered;
 
     @Column(nullable = false)
-    private LocalDate validade;
+    private LocalDate expireDate;
 
     @Column(nullable = false)
-    private int quantidade;
+    private int quantity;
 
     public Products() {
     }
 
-    public Products(String codigo, String descricao, LocalDate dataEntrada, LocalDate validade, int quantidade) {
-        this.codigo = codigo;
-        this.descricao = descricao;
-        this.dataEntrada = dataEntrada;
-        this.validade = validade;
-        this.quantidade = quantidade;
+    public Products(String code, String description, LocalDate dateDelivered, LocalDate expireDate, int quantity) {
+        this.code = code;
+        this.description = description;
+        this.dateDelivered = dateDelivered;
+        this.expireDate = expireDate;
+        this.quantity = quantity;
     }
 
     public Long getId() {
@@ -47,44 +47,44 @@ public class Products implements Serializable {
         this.id = id;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getCode() {
+        return code;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setCode(String codigo) {
+        this.code = codigo;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescription(String descricao) {
+        this.description = descricao;
     }
 
-    public LocalDate getDataEntrada() {
-        return dataEntrada;
+    public LocalDate getDateDelivered() {
+        return dateDelivered;
     }
 
-    public void setDataEntrada(LocalDate dataEntrada) {
-        this.dataEntrada = dataEntrada;
+    public void setDateDelivered(LocalDate dataEntrada) {
+        this.dateDelivered = dataEntrada;
     }
 
-    public LocalDate getValidade() {
-        return validade;
+    public LocalDate getExpireDate() {
+        return expireDate;
     }
 
-    public void setValidade(LocalDate validade) {
-        this.validade = validade;
+    public void setExpireDate(LocalDate validade) {
+        this.expireDate = validade;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setQuantity(int quantidade) {
+        this.quantity = quantidade;
     }
 
     @Override
@@ -104,11 +104,11 @@ public class Products implements Serializable {
     public String toString() {
         return "Produtos{" +
                 "id=" + id +
-                ", codigo='" + codigo + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", dataEntrada=" + dataEntrada +
-                ", validade=" + validade +
-                ", quantidade=" + quantidade +
+                ", codigo='" + code + '\'' +
+                ", descricao='" + description + '\'' +
+                ", dataEntrada=" + dateDelivered +
+                ", validade=" + expireDate +
+                ", quantidade=" + quantity +
                 '}';
     }
 }

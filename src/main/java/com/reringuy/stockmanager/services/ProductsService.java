@@ -8,6 +8,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @RequestScoped
 public class ProductsService implements Serializable {
@@ -16,15 +17,15 @@ public class ProductsService implements Serializable {
 
     @Transactional
     public void SaveProduct(Products products) throws RuntimeException {
-        ValidateProduct(products);
+        ValidateProduct(products, false);
 
-        products.setDataEntrada(LocalDate.now());
+        products.setDateDelivered(LocalDate.now());
         productsRepository.save(products);
     }
 
     @Transactional
     public void UpdateProduct(Products products) throws RuntimeException {
-        ValidateProduct(products);
+        ValidateProduct(products, true);
 
         productsRepository.update(products);
     }
@@ -34,17 +35,36 @@ public class ProductsService implements Serializable {
         productsRepository.deleteById(id);
     }
 
-    private void ValidateProduct(Products products) throws RuntimeException {
-        if (products.getValidade().isBefore(LocalDate.now())) {
+    public List<Products> GetAllProducts() {
+        return productsRepository.findAll();
+    }
+
+    public Products GetProductById(long id) {
+        return productsRepository.findById(id);
+    }
+
+    private void ValidateProduct(Products products, boolean isUpdate) throws RuntimeException {
+        if (products.getExpireDate().isBefore(LocalDate.now())) {
             throw new RuntimeException("Produto expirado.");
         }
 
-        if (products.getQuantidade() <= 0) {
+        if (products.getQuantity() <= 0) {
             throw new RuntimeException("Quantidade invalida.");
         }
 
-        if (productsRepository.findByCodigo(products.getCodigo()) != null) {
-            throw new RuntimeException("Produto ja cadastrado.");
+        Products existing = productsRepository.findByCodigo(products.getCode());
+        if (existing != null) {
+            if (!isUpdate) {
+                // On create, any existing with same code is invalid
+                throw new RuntimeException("Produto ja cadastrado.");
+            } else {
+                // On update, allow same code if it is the same product (same id)
+                Long currentId = products.getId();
+                Long existingId = existing.getId();
+                if (currentId == null || !existingId.equals(currentId)) {
+                    throw new RuntimeException("Produto ja cadastrado.");
+                }
+            }
         }
     }
 }

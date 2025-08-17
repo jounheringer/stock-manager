@@ -36,6 +36,10 @@ public class Users {
         this.email = email;
     }
 
+    public boolean userValid() {
+        return (this.username != null && !this.username.isEmpty()) && (this.email != null && !this.email.isEmpty());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

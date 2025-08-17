@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="WEB-INF/template/Layout.xhtml">
+    <ui:define name="title">
+        Listagem de pagamentos
+    </ui:define>
+    <ui:define name="content">
+        <div class="action-bar">
+            <h:form>
+                <p:button value="Adicionar Produto" outcome="/AddProduct.xhtml" styleClass="ui-button-raised ui-button-rounded"/>
+                <p:button value="Adicionar Usuário" outcome="/AddUser.xhtml" styleClass="ui-button-raised ui-button-rounded ui-button-secondary"/>
+                <p:button value="Adicionar Pagamento" outcome="/AddPayment.xhtml" styleClass="ui-button-raised ui-button-rounded ui-button-success"/>
+            </h:form>
+        </div>
+        <h:form>
+            <p:dataTable value="#{paymentController.payments}"
+                         var="item"
+                         emptyMessage="Nenhum pagamento cadastrado."
+                         paginator="#{not empty paymentController.payments}"
+                         rows="#{paymentController.size}"
+                         paginatorPosition="bottom">
+                <p:column headerText="Código do Produto">
+                    <h:outputText value="#{item.product.code}"/>
+                </p:column>
+                <p:column headerText="Quantidade">
+                    <h:outputText value="#{item.payment.quantity}"/>
+                </p:column>
+                <p:column headerText="Usuário">
+                    <h:outputText value="#{item.user.username}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

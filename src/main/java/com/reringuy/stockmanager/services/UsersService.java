@@ -7,6 +7,7 @@ import com.reringuy.stockmanager.utils.Transactional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.util.List;
 
 @RequestScoped
 public class UsersService implements Serializable {
@@ -26,5 +27,13 @@ public class UsersService implements Serializable {
     @Transactional
     public void DeleteUser(long id) {
         usersRepository.deleteById(id);
+    }
+
+    public List<Users> GetAllUsers() {
+        return usersRepository.findAll();
+    }
+
+    public Users GetUserById(long id) {
+        return usersRepository.findById(id);
     }
 }

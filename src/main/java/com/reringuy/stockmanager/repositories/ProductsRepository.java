@@ -29,13 +29,16 @@ public class ProductsRepository {
     }
 
     public Products findByCodigo(String codigo) {
-        return entityManager.createQuery("SELECT p FROM Products p WHERE p.codigo = :codigo", Products.class)
-                .setParameter("codigo", codigo).getSingleResult();
+        List<Products> results = entityManager
+                .createQuery("SELECT p FROM Products p WHERE p.code = :codigo", Products.class)
+                .setParameter("codigo", codigo)
+                .getResultList();
+        return results.isEmpty() ? null : results.get(0);
     }
 
     public Products findByCodigoLike(String codigo) {
         return entityManager
-                .createQuery("SELECT p FROM Products p WHERE p.codigo LIKE :codigo", Products.class)
+                .createQuery("SELECT p FROM Products p WHERE p.code LIKE :codigo", Products.class)
                 .setParameter("codigo", "%" + codigo + "%").getSingleResult();
     }
 
