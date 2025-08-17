@@ -8,6 +8,8 @@ import com.reringuy.stockmanager.services.ProductsService;
 import com.reringuy.stockmanager.services.UsersService;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,13 +21,11 @@ import java.util.List;
 public class PaymentController implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    // Listing for StockManager page
     private List<PaymentDetails> payments;
 
     private int size = 10;
     private int page = 1;
 
-    // Fields for AddPayment form
     private List<Users> users;
     private List<Products> products;
     private Long selectedUserId;
@@ -52,10 +52,17 @@ public class PaymentController implements Serializable {
         }
         Users user = usersService.GetUserById(selectedUserId);
         Products product = productsService.GetProductById(selectedProductId);
-        paymentService.SetPayment(user, product, quantity);
-        this.selectedUserId = null;
-        this.selectedProductId = null;
-        this.quantity = null;
+        try {
+            paymentService.SetPayment(user, product, quantity);
+            this.selectedUserId = null;
+            this.selectedProductId = null;
+            this.quantity = null;
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Pagamento salvo com sucesso."));
+        } catch (RuntimeException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao salvar", ex.getMessage()));
+        }
     }
 
     public int getSize() {

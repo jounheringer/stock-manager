@@ -4,6 +4,8 @@ import com.reringuy.stockmanager.models.Users;
 import com.reringuy.stockmanager.services.UsersService;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -32,7 +34,14 @@ public class UserController implements Serializable {
     }
 
     public void saveUser() {
-        this.usersService.SaveUser(this.users);
-        this.users = new Users();
+        try {
+            this.usersService.SaveUser(this.users);
+            this.users = new Users();
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Usuário salvo com sucesso."));
+        } catch (RuntimeException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao salvar", ex.getMessage()));
+        }
     }
 }

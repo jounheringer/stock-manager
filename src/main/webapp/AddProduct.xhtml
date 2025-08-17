@@ -11,6 +11,8 @@
         <div class="form-container">
             <h2>Novo Produto</h2>
             <h:form id="containerForm" styleClass="form">
+                <p:messages id="msgs" autoUpdate="true" showDetail="true" closable="true"/>
+
                 <p:outputLabel value="Codigo:" for="code"/>
                 <h:inputText id="code"
                              value="#{productController.products.code}"

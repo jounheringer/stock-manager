@@ -16,6 +16,14 @@ public class Users {
     @Column(unique = true, nullable = false)
     private String email;
 
+    public Users() {
+    }
+
+    public Users(String username, String email) {
+        this.username = username;
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }

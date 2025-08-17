@@ -11,6 +11,8 @@
         <div class="form-container">
             <h2>Novo Pagamento</h2>
             <h:form id="containerForm" styleClass="form">
+                <p:messages id="msgs" autoUpdate="true" showDetail="true" closable="true"/>
+
                 <p:outputLabel value="Usuário:" for="user"/>
                 <p:selectOneMenu id="user"
                                  value="#{paymentController.selectedUserId}"

@@ -13,19 +13,19 @@ public class Products implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "codigo", nullable = false, unique = true)
     private String code;
 
-    @Column
+    @Column(name = "descricao")
     private String description;
 
     @Column(name = "data_entrada", nullable = false)
     private LocalDate dateDelivered;
 
-    @Column(nullable = false)
+    @Column(name = "validade", nullable = false)
     private LocalDate expireDate;
 
-    @Column(nullable = false)
+    @Column(name = "quantidade",nullable = false)
     private int quantity;
 
     public Products() {

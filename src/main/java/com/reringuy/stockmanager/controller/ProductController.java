@@ -4,6 +4,8 @@ import com.reringuy.stockmanager.models.Products;
 import com.reringuy.stockmanager.services.ProductsService;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,7 +37,14 @@ public class ProductController implements Serializable {
     }
 
     public void saveProduct() {
-        this.productsService.SaveProduct(this.products);
-        this.products = new Products();
+        try {
+            this.productsService.SaveProduct(this.products);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Produto salvo com sucesso."));
+            this.products = new Products();
+        } catch (RuntimeException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao salvar", ex.getMessage()));
+        }
     }
 }

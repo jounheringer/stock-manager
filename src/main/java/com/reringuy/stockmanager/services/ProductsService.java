@@ -55,13 +55,11 @@ public class ProductsService implements Serializable {
         Products existing = productsRepository.findByCodigo(products.getCode());
         if (existing != null) {
             if (!isUpdate) {
-                // On create, any existing with same code is invalid
                 throw new RuntimeException("Produto ja cadastrado.");
             } else {
-                // On update, allow same code if it is the same product (same id)
                 Long currentId = products.getId();
                 Long existingId = existing.getId();
-                if (currentId == null || !existingId.equals(currentId)) {
+                if (!existingId.equals(currentId)) {
                     throw new RuntimeException("Produto ja cadastrado.");
                 }
             }

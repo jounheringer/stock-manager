@@ -11,6 +11,8 @@
         <div class="form-container">
             <h2>Novo Usuário</h2>
             <h:form id="containerForm" styleClass="form">
+                <p:messages id="msgs" autoUpdate="true" showDetail="true" closable="true"/>
+
                 <p:outputLabel value="Nome:" for="username"/>
                 <h:inputText id="username"
                              value="#{userController.users.username}"
