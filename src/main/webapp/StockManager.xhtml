@@ -20,7 +20,7 @@
                          var="item"
                          emptyMessage="Nenhum pagamento cadastrado."
                          paginator="#{not empty paymentController.payments}"
-                         rows="#{paymentController.size}"
+                         rows="10"
                          paginatorPosition="bottom">
                 <p:column headerText="Código do Produto">
                     <h:outputText value="#{item.product.code}"/>

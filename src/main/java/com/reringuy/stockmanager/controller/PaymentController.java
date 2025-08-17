@@ -23,9 +23,6 @@ public class PaymentController implements Serializable {
 
     private List<PaymentDetails> payments;
 
-    private int size = 10;
-    private int page = 1;
-
     private List<Users> users;
     private List<Products> products;
     private Long selectedUserId;
@@ -63,22 +60,6 @@ public class PaymentController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao salvar", ex.getMessage()));
         }
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
     }
 
     public List<PaymentDetails> getPayments() {
