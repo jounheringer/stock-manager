@@ -15,8 +15,8 @@ VALUES ('P004', 'Produto 4 - Headset', '2025-08-17', '2026-06-13', 70);
 INSERT INTO produtos (codigo, descricao, data_entrada, validade, quantidade)
 VALUES ('P005', 'Produto 5 - Webcam', '2025-08-17', '2026-03-05', 60);
 
-INSERT INTO pagamentos (quantidade, id_produto, id_usuario) VALUES (5, 1, 1);
-INSERT INTO pagamentos (quantidade, id_produto, id_usuario) VALUES (3, 2, 2);
-INSERT INTO pagamentos (quantidade, id_produto, id_usuario) VALUES (2, 3, 3);
-INSERT INTO pagamentos (quantidade, id_produto, id_usuario) VALUES (4, 4, 4);
-INSERT INTO pagamentos (quantidade, id_produto, id_usuario) VALUES (1, 5, 5);
+INSERT INTO pagamentos (quantidade, id_produto, id_usuario, data_entrega) VALUES (5, 1, 1, '2025-08-17');
+INSERT INTO pagamentos (quantidade, id_produto, id_usuario, data_entrega) VALUES (3, 2, 2, '2025-08-17');
+INSERT INTO pagamentos (quantidade, id_produto, id_usuario, data_entrega) VALUES (2, 3, 3, '2025-08-17');
+INSERT INTO pagamentos (quantidade, id_produto, id_usuario, data_entrega) VALUES (4, 4, 4, '2025-08-17');
+INSERT INTO pagamentos (quantidade, id_produto, id_usuario, data_entrega) VALUES (1, 5, 5, '2025-08-17');

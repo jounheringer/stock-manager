@@ -31,6 +31,9 @@
                 <p:column headerText="Usuário">
                     <h:outputText value="#{item.user.username}"/>
                 </p:column>
+                <p:column headerText="Data de Entrega">
+                    <h:outputText value="#{item.payment.deliveryDate}"/>
+                </p:column>
             </p:dataTable>
         </h:form>
     </ui:define>

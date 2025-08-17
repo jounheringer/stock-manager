@@ -1,6 +1,7 @@
 package com.reringuy.stockmanager.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +13,9 @@ public class Payment {
 
     @Column(name = "quantidade", nullable = false)
     private Integer quantity;
+
+    @Column(name = "data_entrega", nullable = false)
+    private LocalDate deliveryDate;
 
     @ManyToOne
     @JoinColumn(name = "id_produto", nullable = false)
@@ -26,6 +30,7 @@ public class Payment {
         this.quantity = Quantity;
         this.product = product;
         this.user = user;
+        this.deliveryDate = LocalDate.now();
     }
 
     public Payment() {
@@ -64,5 +69,13 @@ public class Payment {
                 ", product=" + product +
                 ", user=" + user +
                 '}';
+    }
+
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 }
